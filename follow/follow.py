@@ -41,14 +41,12 @@ class FollowTurtle(Node):
     def pose2_callback(self, msg):
         self.pose2 = msg
 
-    # 🟢 FIX 1: keep girl inside boundary
     def move_girl_safe(self):
         msg = Twist()
 
         if self.pose2 is None:
             return
 
-        # If near wall → turn strongly
         if self.pose2.x < 2 or self.pose2.x > 9 or self.pose2.y < 2 or self.pose2.y > 9:
             msg.linear.x = 1.0
             msg.angular.z = 2.5
@@ -58,7 +56,6 @@ class FollowTurtle(Node):
 
         self.pub2.publish(msg)
 
-    # 🟢 FIX 2: normalize angle
     def normalize_angle(self, angle):
         while angle > math.pi:
             angle -= 2*math.pi
@@ -73,7 +70,6 @@ class FollowTurtle(Node):
             rclpy.spin_once(self)
 
         while True:
-            # move girl safely
             self.move_girl_safe()
 
             dx = self.pose2.x - self.pose1.x
@@ -84,7 +80,6 @@ class FollowTurtle(Node):
 
             angle_diff = self.normalize_angle(angle_to_goal - self.pose1.theta)
 
-            # 🟢 FIX 3: smooth movement
             msg.linear.x = min(1.5 * distance, 2.0)
             msg.angular.z = 3.0 * angle_diff
 

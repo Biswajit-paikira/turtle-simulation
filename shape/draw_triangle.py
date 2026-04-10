@@ -17,7 +17,6 @@ class DrawTriangle(Node):
         while time.time() < end_time:
             self.publisher_.publish(msg)
 
-        # stop
         msg.linear.x = 0.0
         self.publisher_.publish(msg)
 
@@ -30,19 +29,18 @@ class DrawTriangle(Node):
         while time.time() < end_time:
             self.publisher_.publish(msg)
 
-        # stop
         msg.angular.z = 0.0
         self.publisher_.publish(msg)
 
     def draw(self):
         for i in range(3):
-            self.move_forward(2.0, 2.0)   # forward
-            self.turn(2.09, 1.0)          # 120 degree turn
+            self.move_forward(2.0, 2.0)   
+            self.turn(2.09, 1.0)          
 
 def main():
     rclpy.init()
     node = DrawTriangle()
-    time.sleep(2)   # wait for turtlesim
+    time.sleep(2)   
     node.draw()
     rclpy.shutdown()
 

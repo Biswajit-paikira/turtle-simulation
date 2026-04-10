@@ -17,7 +17,6 @@ class DrawSquare(Node):
         while time.time() < end_time:
             self.publisher_.publish(msg)
 
-        # stop
         msg.linear.x = 0.0
         self.publisher_.publish(msg)
 
@@ -30,19 +29,18 @@ class DrawSquare(Node):
         while time.time() < end_time:
             self.publisher_.publish(msg)
 
-        # stop
         msg.angular.z = 0.0
         self.publisher_.publish(msg)
 
     def draw(self):
         for i in range(4):
-            self.move_forward(2.0, 2.0)   # forward
-            self.turn(1.57, 1.0)          # 90 degree turn
+            self.move_forward(2.0, 2.0)   
+            self.turn(1.57, 1.0)          
 
 def main():
     rclpy.init()
     node = DrawSquare()
-    time.sleep(2)   # wait for turtlesim
+    time.sleep(2)   
     node.draw()
     rclpy.shutdown()
 
